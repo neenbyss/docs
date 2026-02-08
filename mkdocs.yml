@@ -65,8 +65,11 @@ nav:
     # - Mi Mod: minecraft/mi-mod.md
   - FiveM Scripts:
     - FiveM - Índice: fivem/index.md
-    # Añade cada recurso/script, ej.:
-    # - Mi Script: fivem/mi-script.md
+    - Crafting System (nb-crafting):
+      - Inicio: fivem/nb-crafting/index.md
+      - Instalación: fivem/nb-crafting/instalacion.md
+      - Configuración: fivem/nb-crafting/configuracion.md
+      - Origen Ilegal (bandas): fivem/nb-crafting/origen-ilegal.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
