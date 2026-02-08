@@ -1,0 +1,72 @@
+# MkDocs + Material Theme - Documentación centralizada Neenbyss
+# https://docs.neenbyss.com
+
+site_name: Neenbyss Docs
+site_description: Documentación centralizada de mods, scripts y guías
+site_url: https://docs.neenbyss.com
+site_author: Neenbyss
+
+theme:
+  name: material
+  language: es
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Cambiar a tema oscuro
+    - scheme: slate
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Cambiar a tema claro
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: es
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/neenbyss
+  analytics:
+    provider: null  # Añade 'google' o 'plausible' si quieres analytics
+
+# Navegación: una sección por tipo de proyecto. Añade proyectos aquí.
+nav:
+  - Inicio: index.md
+  - Minecraft Mods:
+    - Minecraft - Índice: minecraft/index.md
+    # Añade cada mod como subpágina, ej.:
+    # - Mi Mod: minecraft/mi-mod.md
+  - FiveM Scripts:
+    - FiveM - Índice: fivem/index.md
+    # Añade cada recurso/script, ej.:
+    # - Mi Script: fivem/mi-script.md
+  # Añade más categorías según necesites:
+  # - Otros:
+  #   - Índice: otros/index.md
