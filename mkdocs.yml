@@ -70,6 +70,12 @@ nav:
       - Instalación: fivem/nb-crafting/instalacion.md
       - Configuración: fivem/nb-crafting/configuracion.md
       - Origen Ilegal (bandas): fivem/nb-crafting/origen-ilegal.md
+    - Cars System (nb-cars):
+      - Inicio: fivem/nb-cars/index.md
+      - Instalación: fivem/nb-cars/instalacion.md
+      - Configuración: fivem/nb-cars/configuracion.md
+      - Comandos: fivem/nb-cars/comandos.md
+      - Exports: fivem/nb-cars/exports.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
