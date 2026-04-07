@@ -86,6 +86,12 @@ nav:
       - Exports: fivem/nb-jobmanagers/exports.md
       - Compatibilidad: fivem/nb-jobmanagers/compatibilidad.md
       - Adaptar scripts externos: fivem/nb-jobmanagers/adaptaciones.md
+    - VIP System (nb-vip):
+      - Inicio: fivem/nb-vip/index.md
+      - Instalación: fivem/nb-vip/instalacion.md
+      - Configuración: fivem/nb-vip/configuracion.md
+      - Comandos: fivem/nb-vip/comandos.md
+      - Exports: fivem/nb-vip/exports.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
