@@ -76,6 +76,16 @@ nav:
       - Configuración: fivem/nb-cars/configuracion.md
       - Comandos: fivem/nb-cars/comandos.md
       - Exports: fivem/nb-cars/exports.md
+    - Job Managers (nb-jobmanagers):
+      - Inicio: fivem/nb-jobmanagers/index.md
+      - Instalación: fivem/nb-jobmanagers/instalacion.md
+      - Configuración: fivem/nb-jobmanagers/configuracion.md
+      - Permisos: fivem/nb-jobmanagers/permisos.md
+      - Boss Menu: fivem/nb-jobmanagers/bossmenu.md
+      - Comandos: fivem/nb-jobmanagers/comandos.md
+      - Exports: fivem/nb-jobmanagers/exports.md
+      - Compatibilidad: fivem/nb-jobmanagers/compatibilidad.md
+      - Adaptar scripts externos: fivem/nb-jobmanagers/adaptaciones.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
