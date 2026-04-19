@@ -65,6 +65,13 @@ nav:
     # - Mi Mod: minecraft/mi-mod.md
   - FiveM Scripts:
     - FiveM - Índice: fivem/index.md
+    - Bridge (nb-bridge):
+      - Inicio: fivem/nb-bridge/index.md
+      - Instalación: fivem/nb-bridge/instalacion.md
+      - Configuración: fivem/nb-bridge/configuracion.md
+      - Módulos: fivem/nb-bridge/modulos.md
+      - Overrides: fivem/nb-bridge/overrides.md
+      - Changelog: fivem/nb-bridge/changelog.md
     - Crafting System (nb-crafting):
       - Inicio: fivem/nb-crafting/index.md
       - Instalación: fivem/nb-crafting/instalacion.md
