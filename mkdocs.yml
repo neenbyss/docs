@@ -150,6 +150,15 @@ nav:
       - Flujo de venta: fivem/nb-cardealer/flujo-venta.md
       - Paneles: fivem/nb-cardealer/paneles.md
       - Comandos: fivem/nb-cardealer/comandos.md
+    - Restaurants (nb-restaurants):
+      - Inicio: fivem/nb-restaurants/index.md
+      - Instalación: fivem/nb-restaurants/instalacion.md
+      - Configuración: fivem/nb-restaurants/configuracion.md
+      - Flujos: fivem/nb-restaurants/flujos.md
+      - Panel admin: fivem/nb-restaurants/panel-admin.md
+      - Panel staff: fivem/nb-restaurants/panel-staff.md
+      - Exports: fivem/nb-restaurants/exports.md
+      - Changelog: fivem/nb-restaurants/changelog.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
