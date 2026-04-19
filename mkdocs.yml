@@ -92,6 +92,14 @@ nav:
       - Configuración: fivem/nb-vip/configuracion.md
       - Comandos: fivem/nb-vip/comandos.md
       - Exports: fivem/nb-vip/exports.md
+    - Consumibles (nb-consumibles):
+      - Inicio: fivem/nb-consumibles/index.md
+      - Instalación: fivem/nb-consumibles/instalacion.md
+      - Configuración: fivem/nb-consumibles/configuracion.md
+      - Panel in-game: fivem/nb-consumibles/panel.md
+      - Efectos disponibles: fivem/nb-consumibles/efectos.md
+      - Comandos: fivem/nb-consumibles/comandos.md
+      - Exports: fivem/nb-consumibles/exports.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
