@@ -129,6 +129,27 @@ nav:
       - Configuración: fivem/nb-gangwars/configuracion.md
       - Panel admin: fivem/nb-gangwars/panel-admin.md
       - Integración: fivem/nb-gangwars/integracion.md
+    - Actions (nb-actions):
+      - Inicio: fivem/nb-actions/index.md
+      - Instalación: fivem/nb-actions/instalacion.md
+      - Configuración: fivem/nb-actions/configuracion.md
+      - Acciones disponibles: fivem/nb-actions/acciones.md
+      - Permisos: fivem/nb-actions/permisos.md
+      - Exports: fivem/nb-actions/exports.md
+    - Billings (nb-billings):
+      - Inicio: fivem/nb-billings/index.md
+      - Instalación: fivem/nb-billings/instalacion.md
+      - Configuración: fivem/nb-billings/configuracion.md
+      - Uso: fivem/nb-billings/uso.md
+      - Impuestos: fivem/nb-billings/impuestos.md
+      - Exports: fivem/nb-billings/exports.md
+    - Car Dealer (nb-cardealer):
+      - Inicio: fivem/nb-cardealer/index.md
+      - Instalación: fivem/nb-cardealer/instalacion.md
+      - Configuración: fivem/nb-cardealer/configuracion.md
+      - Flujo de venta: fivem/nb-cardealer/flujo-venta.md
+      - Paneles: fivem/nb-cardealer/paneles.md
+      - Comandos: fivem/nb-cardealer/comandos.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
