@@ -34,6 +34,26 @@ BridgeConfig = {
 }
 ```
 
+### origen_inventory: v1 vs v2
+
+origen_inventory se distribuye en **dos layouts NUI distintos** y no hay forma fiable de autodetectar cual esta corriendo un servidor:
+
+| Version | Ruta de iconos |
+|---------|----------------|
+| **v2** (actual, default) | `nui://origen_inventory/ui/images/%s.png` |
+| **v1** (legacy) | `nui://origen_inventory/html/images/%s.png` |
+
+El default del bridge apunta a **v2**. Si tu servidor usa **v1** y ves iconos rotos, overridea la ruta desde tu script consumidor:
+
+```lua
+-- shared/config.lua del consumidor (nb-restaurants, nb-shops, etc.)
+Config.InventoryImagePaths = {
+    origen_inventory = 'nui://origen_inventory/html/images/%s.png',
+}
+```
+
+El override se aplica tambien a `Bridge.GetImagePath()` por la cascada de configuracion.
+
 ---
 
 ## Cascada de configuracion

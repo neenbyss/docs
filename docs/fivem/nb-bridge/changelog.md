@@ -10,13 +10,34 @@ Este proyecto sigue [semver](https://semver.org/):
 
 ---
 
+## v1.2.2 — 2026-04-19
+
+### Cambiado
+
+- **Ruta por defecto de `origen_inventory` vuelve a `ui/images/`** (rama **v2** de origen_inventory, la actual).
+
+origen_inventory se distribuye en dos layouts NUI:
+
+- **v2** (actual) — `ui/images/`
+- **v1** (legacy) — `html/images/`
+
+No hay forma fiable de autodetectar que rama corre un servidor, asi que tomamos **v2 como default**. Si usas la v1, override desde tu script consumidor:
+
+```lua
+Config.InventoryImagePaths = {
+    origen_inventory = 'nui://origen_inventory/html/images/%s.png',
+}
+```
+
+v1.2.1 asumio una unica ruta canonica; v1.2.2 corrige esa asuncion.
+
+---
+
 ## v1.2.1 — 2026-04-19
 
 ### Arreglado
 
-- Ruta por defecto de `origen_inventory` en `BridgeConfig.InventoryImagePaths` corregida de `ui/images/` a `html/images/` — los iconos de items ahora se resuelven correctamente en servidores que usan origen_inventory sin necesidad de override manual.
-
-Fix cosmetico. Los consumidores (nb-consumibles, nb-shops, nb-restaurants) se benefician inmediatamente.
+- ⚠️ **Obsoleto por v1.2.2**. Cambio `ui/images/` → `html/images/` para origen_inventory pensando que era la ruta canonica; resulto estar ligado a la rama v1 solamente. Si tu servidor usa origen v1, esta version funciona; para v2 (la mas comun) sube a v1.2.2+.
 
 ---
 
