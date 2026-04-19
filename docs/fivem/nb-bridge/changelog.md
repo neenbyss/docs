@@ -10,6 +10,16 @@ Este proyecto sigue [semver](https://semver.org/):
 
 ---
 
+## v1.2.1 — 2026-04-19
+
+### Arreglado
+
+- Ruta por defecto de `origen_inventory` en `BridgeConfig.InventoryImagePaths` corregida de `ui/images/` a `html/images/` — los iconos de items ahora se resuelven correctamente en servidores que usan origen_inventory sin necesidad de override manual.
+
+Fix cosmetico. Los consumidores (nb-consumibles, nb-shops, nb-restaurants) se benefician inmediatamente.
+
+---
+
 ## v1.2.0 — 2026-04-19
 
 ### Anadido
