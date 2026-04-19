@@ -10,6 +10,25 @@ Este proyecto sigue [semver](https://semver.org/):
 
 ---
 
+## v1.2.0 — 2026-04-19
+
+### Anadido
+
+- **Soporte para `origen_inventory`** en todo el modulo inventory. Deteccion automatica (`Bridge.InventorySystem == 'origen_inventory'`).
+- `Bridge.AddItem` / `RemoveItem` / `HasItem` / `CanCarry` → routean a `exports.origen_inventory:addItem` / `removeItem` / `getItemCount` / `canCarryItem`.
+- `Bridge.RegisterStash` → usa `exports.origen_inventory:registerStash(id, { label, slots, weight })`.
+- `Bridge.ForceOpenStash` y `Bridge.ForceOpenPlayerInventory` → origen abre desde el cliente, el bridge hace el relay via el evento `nb-bridge:client:origenOpenInventory`.
+- `Bridge.GetAllItems` → lee items en runtime con `exports.origen_inventory:Items()`.
+- Client: `Bridge.OpenStash`, `Bridge.OpenPlayerInventory` y `Bridge.GetItemCount` (via `Search('count', item)`).
+- `Bridge.RegisterUsableItem` → ademas del framework, cuando origen esta activo tambien se inscribe via `exports.origen_inventory:CreateUseableItem` para que la accion "usar" dispare pase lo que pase.
+
+### Compatibilidad
+
+- 100% compatible con v1.1.0 — sin renombrados ni firmas cambiadas.
+- Opt-in: la integracion solo se activa si `origen_inventory` esta arrancado.
+
+---
+
 ## v1.1.0 — 2026-04-19
 
 ### Anadido

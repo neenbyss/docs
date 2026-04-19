@@ -107,7 +107,7 @@ Bridge.ShowNotification('Item recibido', 'info')
 
 ## Inventory
 
-Abstraccion multi-inventario. Soporta `ox_inventory`, `qb-inventory`, `qs-inventory` y defaults del framework.
+Abstraccion multi-inventario. Soporta `ox_inventory`, `qb-inventory`, `qs-inventory`, `origen_inventory` y defaults del framework.
 
 ### Server
 
@@ -137,7 +137,7 @@ end)
 Bridge.IsUsableItemRegistered('bread')      -- boolean
 ```
 
-> **`Bridge.RegisterUsableItem`** abstrae `ESX.RegisterUsableItem` y `QBCore.Functions.CreateUseableItem`. Se introdujo en v1.1.0 y lo usa internamente [nb-consumibles](../nb-consumibles/index.md).
+> **`Bridge.RegisterUsableItem`** abstrae `ESX.RegisterUsableItem` y `QBCore.Functions.CreateUseableItem`. Se introdujo en v1.1.0 y lo usa internamente [nb-consumibles](../nb-consumibles/index.md). Desde v1.2.0, cuando `origen_inventory` esta activo tambien se registra ahi via `exports.origen_inventory:CreateUseableItem`.
 
 ### Client
 

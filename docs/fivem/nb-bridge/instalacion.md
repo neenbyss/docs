@@ -18,7 +18,7 @@ git clone https://github.com/neenbyss/nb-bridge.git
 Opcion B — release estable (recomendado):
 
 1. Abre la pagina de [releases](https://github.com/neenbyss/nb-bridge/releases).
-2. Descarga el `.zip` de la ultima version (`v1.1.0` o superior).
+2. Descarga el `.zip` de la ultima version (`v1.2.0` o superior).
 3. Descomprime la carpeta en `resources/` de tu servidor.
 4. Renombra a `nb-bridge` si la carpeta incluye el hash en el nombre.
 

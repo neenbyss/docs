@@ -37,7 +37,7 @@ Con nb-bridge todos los recursos `nb-*` dependen de un unico recurso. Una sola a
 | **FiveM** | Artifacts 5181+ recomendado |
 | **Framework** | ESX Legacy (1.9+) o QBCore |
 | **Base de datos** | oxmysql (para vehicle + licencias) |
-| **Inventario (opcional)** | ox_inventory, qb-inventory, qs-inventory |
+| **Inventario (opcional)** | ox_inventory, qb-inventory, qs-inventory, origen_inventory |
 | **ox_lib (opcional)** | Mejora notificaciones y progress bars |
 
 ---
