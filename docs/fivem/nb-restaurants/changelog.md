@@ -28,7 +28,7 @@ El resolver de imagenes respeta las mismas convenciones que el resto del ecosist
 - **origen_inventory**: lee **`client.image` Y `image`** — el URL que pones al crear items con `AddCustomItem` se muestra sin config extra.
 - **ox_inventory**: respeta `client.image`.
 - **qb-inventory**: usa `image` si es URL completa.
-- **Ruta por defecto de origen_inventory** corregida a `html/images/` (antes apuntaba a `ui/images/`). Requiere **nb-bridge v1.2.1+** para el fix del default.
+- **Soporte para las dos versiones de origen_inventory** — origen se distribuye en dos layouts (v1 usa `html/images/`, v2 usa `ui/images/`). El default apunta a v2 (a partir de nb-bridge v1.2.2). Si usas origen v1, override en tu `Config.InventoryImagePaths` — ver [configuracion de nb-bridge](../nb-bridge/configuracion.md#origen-inventory-v1-vs-v2).
 
 ### Compatibilidad
 
