@@ -10,6 +10,32 @@ Semver:
 
 ---
 
+## v1.1.0 — 2026-04-19
+
+### Imagenes de items en cocina y autoservicio
+
+Las UIs de crafting y self-service ahora muestran los **iconos reales** de cada item (los mismos que ves en tu inventario):
+
+- **Autoservicio**: grid con artwork grande + precio destacado + hover con lift y acento rojo. Los slots agotados se ven atenuados en vez de desaparecer.
+- **Mesa de crafteo**: tile grande con el icono del plato + badge `×N` si produce mas de uno. Ingredientes como iconitos con badge de cantidad y tooltip.
+- **Pixel-art nitido** con `image-rendering: crisp-edges`.
+- **Fallback** a icono de paquete si la imagen no carga.
+
+### Mejor soporte de inventarios
+
+El resolver de imagenes respeta las mismas convenciones que el resto del ecosistema:
+
+- **origen_inventory**: lee **`client.image` Y `image`** — el URL que pones al crear items con `AddCustomItem` se muestra sin config extra.
+- **ox_inventory**: respeta `client.image`.
+- **qb-inventory**: usa `image` si es URL completa.
+- **Ruta por defecto de origen_inventory** corregida a `html/images/` (antes apuntaba a `ui/images/`). Requiere **nb-bridge v1.2.1+** para el fix del default.
+
+### Compatibilidad
+
+100% compatible con v1.0.0. El imageMap es additive — clientes antiguos siguen viendo placeholders.
+
+---
+
 ## v1.0.0 — 2026-04-19
 
 Release inicial publica. Suite completa de gestion de restaurantes con paneles in-game, crafting, autoservicio, facturacion y lavado de dinero opcional.
