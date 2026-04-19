@@ -10,6 +10,43 @@ Semver:
 
 ---
 
+## v2.1.0 — 2026-04-19
+
+### Ratings en dos niveles
+
+En v2.0.0 todas las resenas iban contra el restaurante. v2.1.0 las ubica automaticamente:
+
+- **Nivel item** — si el jugador compra un solo plato, el rating se asocia a ese plato.
+- **Nivel restaurante** — si compra carrito multi-item o paga una factura sin item, el rating queda global.
+
+Nueva seccion **"Nota por plato"** en la pestana Stats del boss menu. Los bosses ven que platos tienen buena nota y cuales no.
+
+### Public API para integraciones externas
+
+6 nuevos exports pensados para que **otros scripts** (teléfonos tipo `lb-phone`/`qs-smartphone`, dashboards web, bots de Discord) puedan surface los restaurantes:
+
+```lua
+exports['nb-restaurants']:GetPublicRestaurants()     -- listado + rating + is_open
+exports['nb-restaurants']:GetRestaurantInfo(id)      -- + reviews + item_ratings
+exports['nb-restaurants']:GetRestaurantMenu(id)      -- con precios de promo aplicados
+exports['nb-restaurants']:GetItemRatings(id)
+exports['nb-restaurants']:GetRecentRatings(id, n)
+exports['nb-restaurants']:IsRestaurantOpen(id)
+exports['nb-restaurants']:SubmitPhoneRating(src, data)   -- con anti-review-bomb
+```
+
+Todos los payloads son "publicos": sin identificadores de staff/clientes, solo lo que una app muestra. `GetRestaurantMenu` incluye el **descuento de promo activo** ya aplicado.
+
+`SubmitPhoneRating` valida que el jugador haya comprado al menos una vez — no hay review-bombing.
+
+Ver [exports.md](exports.md#public-api--integraciones-externas) para firma completa + ejemplo de app de telefono en 20 lineas.
+
+### Compatibilidad
+
+100% compatible con v2.0.0. Sin cambios de schema, sin breaking. Aditivo.
+
+---
+
 ## v2.0.0 — 2026-04-19
 
 Release grande de pulido que convierte el MVP en un sistema de negocio completo. Todo lo nuevo es **opt-in** via `Config.Features.*` — el admin decide que se activa.
