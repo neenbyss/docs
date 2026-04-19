@@ -107,6 +107,28 @@ nav:
       - Efectos disponibles: fivem/nb-consumibles/efectos.md
       - Comandos: fivem/nb-consumibles/comandos.md
       - Exports: fivem/nb-consumibles/exports.md
+    - Garages (nb-garages):
+      - Inicio: fivem/nb-garages/index.md
+      - Instalación: fivem/nb-garages/instalacion.md
+      - Configuración: fivem/nb-garages/configuracion.md
+      - Tipos de garaje: fivem/nb-garages/tipos-garage.md
+      - Sistema de llaves: fivem/nb-garages/llaves.md
+      - Persistencia e impound: fivem/nb-garages/persistencia.md
+      - Comandos: fivem/nb-garages/comandos.md
+      - Exports: fivem/nb-garages/exports.md
+    - Shops (nb-shops):
+      - Inicio: fivem/nb-shops/index.md
+      - Instalación: fivem/nb-shops/instalacion.md
+      - Configuración: fivem/nb-shops/configuracion.md
+      - Panel admin: fivem/nb-shops/panel-admin.md
+      - Experiencia de compra: fivem/nb-shops/compra.md
+      - Exports y eventos: fivem/nb-shops/exports.md
+    - Gang Wars (nb-gangwars):
+      - Inicio: fivem/nb-gangwars/index.md
+      - Instalación: fivem/nb-gangwars/instalacion.md
+      - Configuración: fivem/nb-gangwars/configuracion.md
+      - Panel admin: fivem/nb-gangwars/panel-admin.md
+      - Integración: fivem/nb-gangwars/integracion.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
