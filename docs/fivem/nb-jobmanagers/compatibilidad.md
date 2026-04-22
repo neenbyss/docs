@@ -33,6 +33,26 @@ Con `'auto'` no necesitas tocar nada: si nb-billings esta en el servidor, se usa
 
 ---
 
+### qb-management (shim incluido)
+
+nb-jobmanagers declara `provide 'qb-management'` en su `fxmanifest.lua` y registra los exports que usan `jg-mechanic`, `qb-ambulancejob`, `qb-policejob` y otros scripts que dependen de `qb-management` para el dinero de sociedad. Esto permite que funcionen sin instalar el recurso real:
+
+```lua
+exports['qb-management']:GetAccount(society)
+exports['qb-management']:AddMoney(society, amount)
+exports['qb-management']:RemoveMoney(society, amount)
+exports['qb-management']:GetGangAccount(gang)
+exports['qb-management']:AddGangMoney(gang, amount)
+exports['qb-management']:RemoveGangMoney(gang, amount)
+```
+
+Cada movimiento queda registrado en `nb_society_transactions` y aparece en el historial del boss menu.
+
+!!! warning "Si ya corres `qb-management` real"
+    FXServer no permite dos recursos que declaren `provide 'qb-management'`. Si tienes el `qb-management` original instalado, quita la linea `provide 'qb-management'` de `fxmanifest.lua` de nb-jobmanagers.
+
+---
+
 ### nb-garages (opcional)
 
 Si **nb-garages** esta instalado, nb-jobmanagers delega la gestion de vehiculos de sociedad: sacar, guardar, agregar y eliminar vehiculos, ademas del sistema de llaves.

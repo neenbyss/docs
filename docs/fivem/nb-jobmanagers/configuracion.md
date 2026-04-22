@@ -125,6 +125,27 @@ Con `UseNbBillings = 'auto'`, el sistema detecta automaticamente si nb-billings 
 
 ---
 
+## Multi-Job
+
+Sistema que permite a un jugador tener hasta N trabajos a la vez y cambiar entre ellos con `/myjobs` (F7). Ver [Multi-Job](multijob.md) para el detalle.
+
+| Opcion | Descripcion | Por defecto |
+|--------|-------------|-------------|
+| `Config.MultiJob.Enabled` | Activa el sistema (desactivar oculta F7, `/myjobs` y la NUI) | `true` |
+| `Config.MultiJob.MaxJobsPerPlayer` | Limite de trabajos por jugador (0 = sin limite) | `3` |
+| `Config.MultiJob.ChangeCooldown` | Segundos entre cambios (0 = sin cooldown) | `300` |
+| `Config.MultiJob.AllowSelfAssign` | Toggle maestro de "Trabajos Disponibles" (false oculta toda la pestaña) | `true` |
+| `Config.MultiJob.SelfAssignDefault` | Comportamiento por defecto para trabajos sin fila en `nb_job_autoselect`: `false` = opt-in (admin expone con `/publicjob`), `true` = legacy (cualquier `whitelisted = 0` es publico) | `false` |
+| `Config.MultiJob.Command` | Comando para abrir el menu | `'myjobs'` |
+| `Config.MultiJob.Keybind` | Tecla FiveM por defecto (rebindeable por el jugador) | `'F7'` |
+| `Config.MultiJob.KeybindDescription` | Etiqueta mostrada en el Key Map de FiveM | `'My Jobs'` |
+| `Config.MultiJob.SyncOnPlayerLoad` | Al conectar, restaura el trabajo activo en el framework desde `nb_player_jobs` | `true` |
+
+!!! tip "Modo recomendado"
+    `SelfAssignDefault = false` (opt-in). Los trabajos solo aparecen en F7 cuando un admin los expone con `/publicjob <job> on`. Evita que un jugador vea un trabajo que no puede tomar.
+
+---
+
 ## Acciones rapidas
 
 | Opcion | Descripcion | Por defecto |

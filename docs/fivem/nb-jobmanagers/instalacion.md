@@ -40,8 +40,10 @@ Esto crea las siguientes tablas:
 | `nb_invoices` | Facturas emitidas entre trabajos y jugadores |
 | `nb_job_garage_vehicles` | Vehiculos de sociedad por garaje |
 | `nb_job_outfits` | Uniformes/outfits guardados por trabajo |
+| `nb_player_jobs` | Trabajos asignados a cada jugador (Multi-Job) |
+| `nb_job_autoselect` | Override de visibilidad en "Trabajos Disponibles" |
 
-Ademas, se modifican las tablas del framework (`jobs` y `job_grades`) para agregar las columnas `type`, `whitelisted`, `actions` y `permissions` si no existen.
+Ademas, se modifican las tablas del framework (`jobs` y `job_grades`) para agregar las columnas `type`, `whitelisted`, `actions` y `permissions` si no existen, y se convierten a `utf8mb4` antes de anyadir las FKs. **Importa siempre `[sql]/nb_jobmanagers.sql` despues del SQL nativo** de tu framework para evitar `errno 150` al crear las claves foraneas.
 
 ---
 
@@ -71,6 +73,9 @@ ensure nb-jobmanagers
 ```
 
 El orden importa: **nb-bridge** debe cargar antes que **nb-jobmanagers**.
+
+!!! warning "QBCore: contrato de arranque"
+    En QBCore, nb-jobmanagers construye la tabla `QBCore.Shared.Jobs` desde la base de datos **antes** de marcarse como iniciado. Esto requiere que `qb-core`, `oxmysql` y `nb-bridge` esten listos primero. El orden exacto es `qb-core` → `oxmysql` → `nb-bridge` → `nb-jobmanagers`. Si los inviertes, resources que cachean `QBCore.Shared.Jobs` al arrancar pueden leer datos vacios u obsoletos.
 
 ---
 

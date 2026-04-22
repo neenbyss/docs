@@ -290,6 +290,90 @@ local employees = exports['nb-jobmanagers']:getEmployees('police')
 
 ---
 
+### Multi-Job
+
+Todos reciben `identifier` que en QBCore es el **citizenid** del personaje y en ESX es el **license**. Ver [Multi-Job](multijob.md) para el sistema completo.
+
+!!! warning "QBCore + multichar"
+    Nunca pases un `license:...` a estos exports en QBCore: la sesion lee `nb_player_jobs` por `citizenid`, asi que una fila bajo `license:...` no se puede asociar de vuelta al personaje. Usa `Bridge.GetIdentifier(source)` (citizenid del personaje activo) o un citizenid conocido.
+
+#### getPlayerJobs
+
+Lista todas las filas de `nb_player_jobs` de un jugador.
+
+```lua
+local jobs = exports['nb-jobmanagers']:getPlayerJobs(identifier)
+-- jobs = { { job_name = 'police', grade = 2, active = true, ... }, ... }
+```
+
+| Parametro | Tipo | Descripcion |
+|-----------|------|-------------|
+| `identifier` | string | citizenid (QBCore) o license (ESX) |
+
+**Returns:** `table[]` — Lista de trabajos del jugador. `{}` si no tiene ninguno.
+
+---
+
+#### getActiveJob
+
+Devuelve la fila activa de `nb_player_jobs` del jugador (la que espeja el framework).
+
+```lua
+local active = exports['nb-jobmanagers']:getActiveJob(identifier)
+```
+
+**Returns:** `table|nil` — Fila activa o `nil` si no tiene ninguna.
+
+---
+
+#### addPlayerJob
+
+Registra un trabajo en `nb_player_jobs` **sin activarlo** en el framework. Si la pareja (identifier, jobName) ya existe, actualiza el grado y `assigned_by`.
+
+```lua
+exports['nb-jobmanagers']:addPlayerJob(identifier, 'mechanic', 3, 'admin')
+```
+
+| Parametro | Tipo | Descripcion |
+|-----------|------|-------------|
+| `identifier` | string | citizenid (QBCore) o license (ESX) |
+| `jobName` | string | Nombre del trabajo |
+| `grade` | number | Grado inicial (default 0) |
+| `assignedBy` | string | `'admin'`, `'boss'`, `'self'`, `'system'` |
+
+---
+
+#### removePlayerJob
+
+Quita un trabajo. Si era el activo, promueve automaticamente al siguiente de mayor grado o deja al jugador en `unemployed`.
+
+```lua
+exports['nb-jobmanagers']:removePlayerJob(identifier, 'mechanic')
+```
+
+---
+
+#### setActiveJob
+
+Cambia cual es el trabajo activo del jugador y lo sincroniza con el framework (via `Bridge.SetJob`).
+
+```lua
+exports['nb-jobmanagers']:setActiveJob(identifier, 'police')
+```
+
+---
+
+#### setJobAutoSelect
+
+Expone u oculta un trabajo en la pestaña "Trabajos Disponibles" de F7 (escribe una fila en `nb_job_autoselect`).
+
+```lua
+exports['nb-jobmanagers']:setJobAutoSelect('taxi', true)   -- expone
+exports['nb-jobmanagers']:setJobAutoSelect('taxi', false)  -- oculta
+```
+
+---
+
 ### Facturacion
 
 #### createInvoice
