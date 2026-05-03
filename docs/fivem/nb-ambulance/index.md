@@ -15,6 +15,7 @@ Sistema medico **multi-hospital, multi-job, configurable in-game** para FiveM. R
 - 📞 **Dispatch en vivo** — `/911` o `[G]` crean llamadas con estado (pendiente / en camino / cerrada). Panel del medico con take/close, GPS, broadcasts en tiempo real.
 - 💀 **Multi-hospital respawn** — al morir, respawn en la cama mas cercana entre los hospitales activos. Tarifa por hospital configurable.
 - ⌨️ **Comandos directos** — `/911`, `/dispatch`, `/treat`, `/revive`, `/creator`. Sin prefijo `nb-ambulance` obligatorio. Renombrables, F6 por defecto al panel de dispatch.
+- 🏥 **Amenities del hospital** — stash medico (compartido o personal), garage de vehiculos con whitelist por grado, pharmacy con shop ox_inventory, bolsa medica portatil con stash propio.
 
 ---
 
@@ -40,6 +41,7 @@ Sistema medico **multi-hospital, multi-job, configurable in-game** para FiveM. R
 - **[Creator in-game](creator.md)** — flujo del editor de hospitales.
 - **[Sistema de heridas](heridas.md)** — tracker, tratamiento, items.
 - **[Dispatch / 911](dispatch.md)** — llamadas, panel medico, lifecycle.
+- **[Amenities](amenities.md)** — stash, garage, pharmacy, bolsa medica.
 - **[PVP-safe death](pvp.md)** — desactivar la muerte para arenas / minijuegos.
 - **[Exports](exports.md)** — API completa para integraciones.
 - **[Changelog](changelog.md)** — version log.
