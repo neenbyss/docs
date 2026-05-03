@@ -160,6 +160,17 @@ nav:
       - Panel staff: fivem/nb-restaurants/panel-staff.md
       - Exports: fivem/nb-restaurants/exports.md
       - Changelog: fivem/nb-restaurants/changelog.md
+    - Ambulance (nb-ambulance):
+      - Inicio: fivem/nb-ambulance/index.md
+      - Instalación: fivem/nb-ambulance/instalacion.md
+      - Configuración: fivem/nb-ambulance/configuracion.md
+      - Comandos: fivem/nb-ambulance/comandos.md
+      - Creator in-game: fivem/nb-ambulance/creator.md
+      - Sistema de heridas: fivem/nb-ambulance/heridas.md
+      - Dispatch / 911: fivem/nb-ambulance/dispatch.md
+      - PVP-safe death: fivem/nb-ambulance/pvp.md
+      - Exports: fivem/nb-ambulance/exports.md
+      - Changelog: fivem/nb-ambulance/changelog.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
