@@ -118,25 +118,37 @@ Despues ejecuta `/nbamb-reload` (o reinicia el recurso) para refrescar el cache.
 
 ---
 
-## 7. Items para ox_inventory (opcional)
+## 7. Items en el inventario
 
-Si usas ox_inventory, añade en `data/items.lua`:
+nb-ambulance registra los items via **nb-bridge**, asi que en cualquier inventario soportado (ox / qs / qb / origen / ESX/QBCore default) basta con que los items existan en el catalogo del inventario y nb-ambulance se encarga del "use" automaticamente.
 
-```lua
-['bandage']        = { label = 'Bandage',           weight = 50,  server = { export = 'nb-ambulance.use_bandage' } },
-['splint']         = { label = 'Splint',            weight = 100, server = { export = 'nb-ambulance.use_splint' } },
-['tourniquet']     = { label = 'Tourniquet',        weight = 80,  server = { export = 'nb-ambulance.use_tourniquet' } },
-['burn_dressing']  = { label = 'Burn dressing',     weight = 60,  server = { export = 'nb-ambulance.use_burn_dressing' } },
-['oxygen_mask']    = { label = 'Oxygen mask',       weight = 200, server = { export = 'nb-ambulance.use_oxygen_mask' } },
-['medikit']        = { label = 'Medikit',           weight = 500, server = { export = 'nb-ambulance.use_medikit' } },
-['defibrillator']  = { label = 'Defibrillator',     weight = 800 },  -- consumido por /revive con defib
+### Items minimos a definir
+
+```
+bandage, splint, tourniquet, burn_dressing, oxygen_mask, medikit,
+defibrillator, medical_bag
 ```
 
-Para otros inventarios (qb-inventory, esx_inventory, etc), dispara desde el callback de uso:
+Los nombres son configurables en `Config.Injuries.Items` y `Config.MedicalBag.ItemName` si tu economia usa otros.
+
+### ox_inventory (opcional, da la mejor UX)
+
+`data/items.lua` con declaraciones simples — **NO necesitas el `server.export`**, nb-ambulance ya engancha el `usingItem` hook automaticamente:
 
 ```lua
-TriggerServerEvent('nb-ambulance:server:useHealItem', 'bandage')
+['bandage']        = { label = 'Bandage',       weight = 50  },
+['splint']         = { label = 'Splint',        weight = 100 },
+['tourniquet']     = { label = 'Tourniquet',    weight = 80  },
+['burn_dressing']  = { label = 'Burn dressing', weight = 60  },
+['oxygen_mask']    = { label = 'Oxygen mask',   weight = 200 },
+['medikit']        = { label = 'Medikit',       weight = 500 },
+['defibrillator']  = { label = 'Defibrillator', weight = 800 },
+['medical_bag']    = { label = 'Bolsa medica',  weight = 1000, stack = false, close = false },
 ```
+
+### qb-inventory / esx-inventory_hud / qs-inventory / origen / framework default
+
+Solo añade los items al catalogo de tu inventario. nb-ambulance los registra automaticamente via `Bridge.RegisterUsableItem` y el callback se dispara cuando el jugador hace "use".
 
 ---
 

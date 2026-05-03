@@ -2,7 +2,19 @@
 
 Phase 7 añade los 4 elementos clasicos del lobby de un hospital: stash medico, garage de vehiculos, farmacia y bolsa portatil. Todos persisten en SQL y se gestionan desde el creator in-game.
 
-> **Requisito:** `ox_inventory` para stash + pharmacy shop + medical bag. Sin ox hay un fallback minimo de buy event para la pharmacy, pero el stash y la bolsa requieren ox.
+## Compatibilidad con inventarios
+
+Todo el sistema de items pasa por **nb-bridge**, que abstrae la API de los inventarios mas comunes:
+
+| Inventario | Heal items | Stash hospital | Bolsa medica | Pharmacy shop |
+|---|---|---|---|---|
+| **ox_inventory** | ✅ nativo | ✅ shared/personal | ✅ persistente | ✅ shop UI completa |
+| **qb-inventory** | ✅ via QBCore CreateUseableItem | ✅ via OpenInventory | ✅ stash unico por charid | ⚠️ fallback minimo |
+| **qs-inventory** | ✅ via framework | ✅ RegisterStash propio | ✅ stash unico por charid | ⚠️ fallback minimo |
+| **origen_inventory** | ✅ via origen registry | ✅ registerStash | ✅ stash unico por charid | ⚠️ fallback minimo |
+| **ESX default** | ✅ ESX RegisterUsableItem | ➖ requiere registro manual | ➖ | ⚠️ fallback minimo |
+
+> **Heal items y bolsa medica funcionan en cualquier inventario** soportado por nb-bridge. La unica feature que tiene experiencia distinta es el shop de la pharmacy — ox tiene una UI rica y los demas usan un buy event minimal.
 
 ---
 

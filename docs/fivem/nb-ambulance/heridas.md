@@ -87,17 +87,11 @@ Si la hp llega a 0, el flujo de muerte normal toma el control (entra en laststan
 
 ### Auto-aplicacion (paciente con item)
 
-El paciente puede usar items de su propio inventario para curarse. Conexion con ox_inventory mediante `data/items.lua`:
+El paciente puede usar items de su propio inventario para curarse. nb-ambulance registra cada item de `Config.Injuries.Items` automaticamente al arrancar via `Bridge.RegisterUsableItem` (cubre ESX RegisterUsableItem, QBCore CreateUseableItem, qs-inventory, origen_inventory, qb-inventory). Si detecta `ox_inventory`, ademas instala un `usingItem` hook por item para evitar que ox auto-consuma sin ejecutar nuestra logica.
 
-```lua
-['bandage'] = {
-    label  = 'Bandage',
-    weight = 50,
-    server = { export = 'nb-ambulance.use_bandage' }
-},
-```
+**No necesitas `server.export` ni eventos manuales** — sumar los items al catalogo de tu inventario y la logica de uso se conecta sola.
 
-Otros inventarios disparan el evento generico:
+Como ultimo recurso, los inventarios no soportados pueden disparar el evento generico:
 
 ```lua
 TriggerServerEvent('nb-ambulance:server:useHealItem', 'bandage')
