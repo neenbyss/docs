@@ -10,6 +10,79 @@ Este proyecto sigue [semver](https://semver.org/):
 
 ---
 
+## v2.2.0 — 2026-07-13
+
+### Anadido
+
+- **`bridge.log.*`** — auditoria server-side (`bridge.log.createLog(category, title, message, data, mention)`). Despacha al pipeline existente del servidor: **qb-log** (QBCore/QBX) si esta corriendo → un **webhook de Discord** configurado en `BridgeConfig.Logs.Webhooks` (funciona tambien en ESX, que no tiene un recurso de logs nativo) → fallback a `Debugger`. Es un registro de auditoria de produccion y **no** esta gateado por `Debug`.
+- **`bridge.player.onMoneyChanged(cb)`** — hook server que dispara cuando el dinero de un jugador cambia, venga del bridge o de cualquier script de terceros que llame directamente las funciones de dinero del framework (eventos nativos: `esx:addAccountMoney` / `removeAccountMoney` / `setAccountMoney`, `QBCore:Server:OnMoneyChange`). `cb(source, moneyType, amount, newBalance, changeSource)` — `newBalance` es el saldo posterior al cambio, autoritativo.
+- **`bridge.ui.*`** — hooks de ciclo de vida de UI en cliente (`beforeOpening`, `afterClosing`, `beforeAction`, `afterAction`) para que los recursos con menus nunca tengan que ramificar por framework en su codigo de apertura/cierre. Bloquea el inventario via statebag y cierra ox_inventory al abrir; libera al cerrar. Redefinible desde la carpeta `overrides/`.
+- **`BridgeConfig.Logs`** — configuracion de los sinks de logging (`DefaultColor`, `QbLogColor`, `Webhooks`). Se distribuye con webhook vacio por defecto — nunca commitees una URL real.
+
+### Notas
+
+- Todos los añadidos son compatibles hacia atras con v2.1.0 — sin renombrados ni cambios de firma.
+
+---
+
+## v2.1.0 — 2026-06-21
+
+### Anadido
+
+- **`bridge.event.*`** — namespace unificado de hooks de ciclo de vida para los tres frameworks:
+    - **Server:** `onPlayerLoaded`, `onPlayerUnloaded`, `onResourceStart`, `onResourceStop`, `onSelfStart`, `onSelfStop`.
+    - **Client:** `onPlayerLoaded`, `onPlayerUnloaded`, `onPlayerSpawned`, `onResourceStart`, `onResourceStop`.
+- **`bridge.diagnostics()`** — snapshot de runtime en el server (framework, sistema de inventario, feature flags, dependencias faltantes, uptime).
+- **Comando `/nbdiag`** — admin y consola; imprime el diagnostico en la consola del servidor y en el chat de admin.
+- **`exports['nb-bridge']:diagnostics()`** — export directo para llamar diagnostics desde otros recursos sin pasar por `get()`.
+- **Type stubs LuaLS/EmmyLua** (`types/nb-bridge.lua` + `.luarc.json`) — autocompletado y chequeo de tipos para los namespaces del bridge.
+- **CI con GitHub Actions** — lint con luacheck en cada push/PR; validacion de version de fxmanifest en tag pushes.
+
+### Arreglado
+
+- CI: agregadas natives de FiveM faltantes en los globals de luacheck.
+- CI: fijado `actions/checkout@v4.2.2` para silenciar el warning de deprecacion de Node.js 20.
+
+---
+
+## v2.0.0 — 2026-06-21
+
+### Cambios incompatibles (BREAKING)
+
+- **API namespaced** — se eliminan todos los metodos planos `Bridge.Fn`. Nueva API:
+    - `Bridge.player.*` — gestion de jugadores, dinero, trabajos, gangs, permisos.
+    - `Bridge.inventory.*` — items, stashes, items usables.
+    - `Bridge.vehicle.*` — spawn de vehiculos, propiedades, matriculas.
+    - `Bridge.notify.*` — notificaciones (server + client).
+    - `Bridge.callback.*` — callbacks de servidor.
+    - `Bridge.license.*` — licencias de conducir/armas.
+    - `Bridge.progress.*` — barras de progreso.
+- **Cambia la API de consumo** — los scripts ahora deben usar `local bridge = exports['nb-bridge']:get()` en lugar de `shared_scripts { '@nb-bridge/loader.lua' }`.
+- **Sin alias de compatibilidad hacia atras** — los nombres de metodos de v1.x desaparecen por completo.
+- **Se eliminan todos los exports por metodo** — ya no existe `exports['nb-bridge']:GetJob(...)` ni similares. El unico export es `get()`.
+- **Los nombres de metodo ahora son camelCase** — `addMoney`, `getJob`, `spawnVehicle`, etc.
+
+### Anadido
+
+- **Soporte para QBX (qbx_core)** — compatibilidad completa como tercer framework. Orden de deteccion: QBX → ESX → QBCore (evita falsos positivos por el compat-shim `qb-core` que expone QBX).
+- `Bridge.player.setGang(source, gangName, grade)` — asigna gang al jugador (QBCore/QBX).
+- `Bridge.player.onPlayerUnloaded(cb)` — hook de evento server + client para los tres frameworks.
+- `Bridge.player.getAllPlayers()` — retorna array de source IDs online.
+- `Bridge.player.registerCommand(name, group, cb, suggestion)` — registro unificado de comandos con gating ACE en ESX / QBCore / QBX.
+- `Bridge.inventory.getItemMetadata(source, itemName)` — metadata por item (solo ox_inventory).
+- `Bridge.player.getGroup` ahora retorna tambien `'superadmin'` y `'mod'` en QBCore/QBX via chequeo de permisos ACE. Configurable via `BridgeConfig.GroupMap`.
+
+### Arreglado
+
+- `Bridge.player.removeMoney` (ESX) — pre-chequea el balance del jugador; ahora retorna `false` real cuando faltan fondos en lugar de retornar siempre `true`.
+- `Bridge.inventory.registerUsableItem` — en `origen_inventory`, registra SOLO via origen, eliminando el doble disparo que ocurria cuando origen y el framework notificaban a la vez.
+- `Bridge.vehicle.spawnVehicle` — usa un deadline de wall-clock con `GetGameTimer()` en lugar de un contador de frames, evitando timeouts prematuros bajo carga del servidor.
+- `Bridge.inventory.*` — se agrego el fallback sincrono de `ResolveInventorySystem()`; los llamados tempranos (antes del hilo de deteccion de 500ms) ya no fallan silenciosamente.
+- `Bridge.inventory.forceOpenPlayerInventory` (qs-inventory) — usa el export de servidor cuando esta disponible; cae al evento de cliente correcto sin el `{}` inicial espurio.
+- `Bridge.callback.trigger` — timeout de limpieza de 15 segundos; los callbacks pendientes ahora se liberan con `cb(nil)` si el servidor nunca responde, evitando memory leaks.
+
+---
+
 ## v1.2.2 — 2026-04-19
 
 ### Cambiado

@@ -10,10 +10,20 @@ nb-bridge carga los modulos primero y despues todos los archivos en `overrides/`
 
 ```lua
 -- fxmanifest.lua de nb-bridge
+shared_scripts {
+    'config.lua',
+    'shared/init.lua',
+    'modules/notify/shared.lua',
+    'modules/vehicle/shared.lua',
+    'modules/callbacks/shared.lua',
+    'modules/events/shared.lua',
+}
+
 client_scripts {
     'modules/framework/client.lua',
     'modules/inventory/client.lua',
     'modules/progress/client.lua',
+    'modules/ui/client.lua',
     'overrides/client/*.lua',    -- <- se cargan al final
 }
 
@@ -22,11 +32,13 @@ server_scripts {
     'modules/framework/server.lua',
     'modules/inventory/server.lua',
     'modules/licenses/server.lua',
+    'modules/diagnostics/server.lua',
+    'modules/log/server.lua',
     'overrides/server/*.lua',    -- <- se cargan al final
 }
 ```
 
-Como el `Bridge` global ya existe cuando tu override corre, **puedes reasignar cualquier funcion** simplemente sobreescribiendola.
+Como el `Bridge` global (con todos sus namespaces ya poblados) existe cuando tu override corre, **puedes reasignar cualquier funcion namespaced** simplemente sobreescribiendola: `function Bridge.notify.send(...)`, `function Bridge.player.getJob(...)`, etc.
 
 ---
 
@@ -48,7 +60,7 @@ Si usas `mythic_notify`, `okokNotify` u otro sistema propietario:
 `overrides/client/custom_notify.lua`:
 
 ```lua
-function Bridge.ShowNotification(message, type)
+function Bridge.notify.show(message, type)
     exports['mythic_notify']:DoHudText(type or 'info', message)
 end
 ```
@@ -56,12 +68,12 @@ end
 `overrides/server/custom_notify.lua`:
 
 ```lua
-function Bridge.Notify(source, message, type)
+function Bridge.notify.send(source, message, type)
     TriggerClientEvent('nb-bridge:client:notify', source, message, type)
 end
 ```
 
-Todos los recursos `nb-*` empezaran a usar automaticamente `mythic_notify` sin tocar su codigo.
+Todos los recursos `nb-*` empezaran a usar automaticamente `mythic_notify` sin tocar su codigo, porque siguen llamando a `bridge.notify.show(...)` / `bridge.notify.send(...)` a traves del export `get()`.
 
 ---
 
@@ -70,15 +82,15 @@ Todos los recursos `nb-*` empezaran a usar automaticamente `mythic_notify` sin t
 `overrides/server/custom_inventory.lua`:
 
 ```lua
-function Bridge.AddItem(source, item, count, metadata, slot)
+function Bridge.inventory.addItem(source, item, count, metadata, slot)
     return exports['my_inventory']:AddItem(source, item, count, metadata)
 end
 
-function Bridge.RemoveItem(source, item, count, metadata, slot)
+function Bridge.inventory.removeItem(source, item, count, metadata, slot)
     return exports['my_inventory']:RemoveItem(source, item, count)
 end
 
-function Bridge.HasItem(source, item, count)
+function Bridge.inventory.hasItem(source, item, count)
     return exports['my_inventory']:HasItem(source, item, count or 1)
 end
 ```
@@ -92,9 +104,9 @@ Si usas `origen_ilegal` (o similar) para gangs y quieres que nb-crafting los det
 `overrides/server/gang_system.lua`:
 
 ```lua
-local originalGetJob = Bridge.GetJob
+local originalGetJob = Bridge.player.getJob
 
-function Bridge.GetJob(source)
+function Bridge.player.getJob(source)
     local gangData = exports['origen_ilegal']:getPlayerGang(source)
     if gangData and gangData.id then
         return {
@@ -119,11 +131,11 @@ Guarda la funcion original antes de sustituirla — de esta forma tu override qu
 
 ```lua
 local MAX_AMOUNT = 1000000
-local originalSetMoney = Bridge.SetMoney
+local originalSetMoney = Bridge.player.setMoney
 
-function Bridge.SetMoney(source, moneyType, amount, reason)
+function Bridge.player.setMoney(source, moneyType, amount, reason)
     if amount > MAX_AMOUNT then
-        print(('[nb-bridge override] blocked SetMoney %s $%d (limite $%d)'):format(source, amount, MAX_AMOUNT))
+        print(('[nb-bridge override] blocked setMoney %s $%d (limite $%d)'):format(source, amount, MAX_AMOUNT))
         return false
     end
     return originalSetMoney(source, moneyType, amount, reason)
@@ -134,7 +146,7 @@ end
 
 ## Buenas practicas
 
-1. **Guarda la original** si quieres una cadena: `local originalX = Bridge.X`.
+1. **Guarda la original** si quieres una cadena: `local originalX = Bridge.namespace.x`.
 2. **Un archivo por proposito** — mas facil de mantener que un `_overrides.lua` gigante.
 3. **Respeta la firma** — devuelve los mismos tipos que la funcion original para no romper consumidores.
 4. **Documenta en comentarios** que override estas aplicando y por que — evita sorpresas cuando actualices nb-bridge.
@@ -145,13 +157,13 @@ end
 
 ## Advertencias
 
-- Los overrides se cargan **una sola vez** al arrancar nb-bridge. Si un recurso `nb-*` arranca antes que tu override esta resuelto, no hay problema — las llamadas `Bridge.X` resuelven dinamicamente.
+- Los overrides se cargan **una sola vez** al arrancar nb-bridge. Si un recurso `nb-*` arranca antes que tu override esta resuelto, no hay problema — las llamadas a traves de `bridge = exports['nb-bridge']:get()` siempre resuelven la version actual de la tabla `Bridge`.
 - No toques los archivos de `modules/*.lua` directamente. Perderas los cambios al actualizar.
 - Si necesitas una funcion **nueva** (no existente en nb-bridge), no hace falta override — puedes extender `Bridge` desde tu propio recurso:
 
 ```lua
 -- En tu recurso, no en nb-bridge
-function Bridge.MyCustomHelper(...)
+function Bridge.player.myCustomHelper(...)
     -- ...
 end
 ```

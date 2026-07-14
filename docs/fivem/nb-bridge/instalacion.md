@@ -18,7 +18,7 @@ git clone https://github.com/neenbyss/nb-bridge.git
 Opcion B — release estable (recomendado):
 
 1. Abre la pagina de [releases](https://github.com/neenbyss/nb-bridge/releases).
-2. Descarga el `.zip` de la ultima version (`v1.2.0` o superior).
+2. Descarga el `.zip` de la **ultima release publicada** — siempre la mas reciente, nunca fijes una version antigua.
 3. Descomprime la carpeta en `resources/` de tu servidor.
 4. Renombra a `nb-bridge` si la carpeta incluye el hash en el nombre.
 
@@ -33,8 +33,8 @@ nb-bridge no trae base de datos propia, pero requiere:
 | Dependencia | Obligatoria | Proposito |
 |-------------|-------------|-----------|
 | **oxmysql** | si | Queries de vehiculo y licencias. |
-| **es_extended** o **qb-core** | si | Framework a detectar. Uno de los dos. |
-| **ox_lib** | no | Activa progress bars y notificaciones mejoradas. |
+| **es_extended**, **qb-core** o **qbx_core** | si | Framework a detectar. Uno de los tres. |
+| **ox_lib** | no | Activa progress bars y notificaciones mejoradas. Obligatorio de facto en servidores QBX. |
 
 ---
 
@@ -44,7 +44,7 @@ El orden es **critico**. nb-bridge tiene que iniciar antes que cualquier recurso
 
 ```cfg
 ensure oxmysql
-ensure es_extended          # o qb-core
+ensure es_extended          # o qb-core / qbx_core
 ensure ox_lib               # opcional pero recomendado
 ensure nb-bridge            # OBLIGATORIO antes de cualquier nb-*
 
@@ -63,21 +63,27 @@ ensure nb-consumibles
 Al arrancar el servidor, busca en consola un log parecido a:
 
 ```
-[nb-bridge] Framework detected: ESX
+[nb-bridge] Framework detected: QBX (qbx_core)
 [nb-bridge] Inventory detected: ox_inventory
 ```
 
-Ademas, desde cualquier recurso puedes comprobarlo:
+(o `ESX` / `QBCore` segun tu framework).
+
+Desde cualquier recurso consumidor puedes comprobarlo con el export `get()` — el `Bridge` global de nb-bridge **no** es accesible directamente desde otro recurso, cada resource tiene su propio estado de Lua:
 
 ```lua
+local bridge = exports['nb-bridge']:get()
+
 CreateThread(function()
     Wait(500)
-    print('Framework:', Bridge.Framework)
-    print('Inventory:', Bridge.InventorySystem)
+    print('Framework:', bridge.Framework)
+    print('Inventory:', bridge.InventorySystem)
 end)
 ```
 
-Si `Bridge.Framework` es `nil`, significa que ni ESX ni QBCore arrancaron antes — revisa el orden en `server.cfg`.
+Si `bridge.Framework` es `nil`, significa que ni ESX, ni QBCore ni QBX arrancaron antes — revisa el orden en `server.cfg`.
+
+Tambien puedes usar el comando `/nbdiag` (admin o consola) para un snapshot completo, o el export directo `exports['nb-bridge']:diagnostics()` — ver [Modulos](modulos.md#diagnostics).
 
 ---
 
@@ -92,7 +98,18 @@ dependencies {
 }
 ```
 
-No hace falta listar modulos en `shared_scripts`. El `Bridge` global ya esta disponible cuando tu script arranca.
+No hace falta listar modulos en `shared_scripts`. Pero a diferencia de v1.x, **no hay un `Bridge` global disponible automaticamente** en tu recurso — tenes que pedirlo explicitamente via el export `get()` al inicio de cada script:
+
+```lua
+-- server.lua / client.lua
+local bridge = exports['nb-bridge']:get()
+
+-- Ahora usas los metodos namespaced:
+bridge.player.addMoney(source, 'bank', 500, 'salary')
+bridge.notify.send(source, 'Pago recibido', 'success')
+```
+
+Llama a `get()` una sola vez por archivo y reutiliza esa variable local. El viejo patron `shared_scripts { '@nb-bridge/loader.lua' }` que inyectaba un `Bridge` global en tu recurso esta **deprecado** desde v2.0.0 y se eliminara en una futura major — ver [Modulos](modulos.md) para la API completa.
 
 ---
 
@@ -103,4 +120,4 @@ No hace falta listar modulos en `shared_scripts`. El `Bridge` global ya esta dis
 3. Revisar el [changelog](changelog.md) por cambios que afecten tus overrides.
 4. Arrancar de nuevo.
 
-Las versiones siguen [semver](https://semver.org/): las **minor** y **patch** son compatibles hacia atras; una **major** (ej. `2.0.0`) puede requerir ajustes.
+Las versiones siguen [semver](https://semver.org/): las **minor** y **patch** son compatibles hacia atras; una **major** (ej. `2.0.0`, que reemplazo toda la API plana por una namespaced) puede requerir ajustes en tu codigo.
