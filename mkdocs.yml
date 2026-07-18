@@ -180,6 +180,13 @@ nav:
       - PVP-safe death: fivem/nb-ambulance/pvp.md
       - Exports: fivem/nb-ambulance/exports.md
       - Changelog: fivem/nb-ambulance/changelog.md
+    - Warehouse (nb-warehouse):
+      - Inicio: fivem/nb-warehouse/index.md
+      - Instalación: fivem/nb-warehouse/instalacion.md
+      - Configuración: fivem/nb-warehouse/configuracion.md
+      - Comandos: fivem/nb-warehouse/comandos.md
+      - Exports: fivem/nb-warehouse/exports.md
+      - Changelog: fivem/nb-warehouse/changelog.md
   # Añade más categorías según necesites:
   # - Otros:
   #   - Índice: otros/index.md
